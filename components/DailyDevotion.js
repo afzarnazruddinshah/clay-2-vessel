@@ -13,18 +13,19 @@ const DailyDevotion = () => {
   
   const [selection, setSelection] = React.useState(false);
     const onDateClick = (d) =>{
-      console.log(d);
-      setValue(d);
-      setDate(d.getDate());
-      setMonth(d.getMonth());
-      setYear(d.getFullYear());
-      setSelection(true);
+      if(hasRecords){
+        setValue(d);
+        setDate(d.getDate());
+        setMonth(d.getMonth());
+        setYear(d.getFullYear());
+        setSelection(true);
+      }
+     
     }
 
     const [records, setRecords] = React.useState([]);
-  
+    const [hasRecords, setHasRecords] = React.useState(false);
     React.useEffect(()=>{
-     console.log(records);
   }, [records]);
 
     const getData = () => {
@@ -38,13 +39,13 @@ const DailyDevotion = () => {
             const obj = { ...idObj, ...doc.data() };
             recArr.push(obj);
           });
+          setHasRecords(true);
           setRecords(recArr);
         });
     };
 
     React.useEffect(()=>{
         getData();
-
     }, []);
   
     return ( 

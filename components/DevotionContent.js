@@ -6,7 +6,6 @@ const DevotionContent = (props) => {
 
     const [content, setContent] = React.useState("");
     const [month, setMonth] = React.useState("");
-    console.log(props);
     const monthMap = (month) =>{
       switch(month){
         case 0: return 'jan';
@@ -30,8 +29,11 @@ const DevotionContent = (props) => {
         setMonth(month.toUpperCase());
         const monthYear = String(month+"-"+props.year);
         const currentMonthRecord = props.records.filter( record=> record.id ===  monthYear);
-        setContent(currentMonthRecord[0][String(month+"-"+props.date)]);
-        // if()
+        if(currentMonthRecord && currentMonthRecord[0])
+          setContent(currentMonthRecord[0][String(month+"-"+props.date)]);
+        if(currentMonthRecord[0] === undefined){
+          setContent("Devotion not updated for this date");
+        }
       }
        
     }, [props.records, props.year, props.month, props.date]);
